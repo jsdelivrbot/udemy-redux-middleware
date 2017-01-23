@@ -4,7 +4,10 @@ export default ({ dispatch }) => {
     if(!action.payload || !action.payload.then) {
       return next(action);
     }
-    console.log('yes: promise', action);
-    next(action);
+    action.payload
+    .then((response) => {
+      const newAction = { ...action, payload: response.data };
+      dispatch(newAction);
+    });
   }
 }
